@@ -1,0 +1,168 @@
+{% if session['utype'] == "admin" %}
+{% include 'adminheader.html' %}
+{% elif session['utype'] == "staff" %}
+{% include 'staffheader.html' %}
+{% endif %}
+
+<center>
+    <div class="img-div" style="padding: 100px 0px;">
+    {% if data['raw'] %}
+
+    
+    <h1 class="hd">Update Food</h1>
+    <form action="" id="form" method="post" class="form" enctype="multipart/form-data">
+        <table class="table form-group">
+            <tr>
+                <th>Room</th>
+                <td><input type="text" class="form-control"  value="{{ data['raw'][0]['food'] }}" required name="food" id=""></td>
+            </tr>
+            <tr>
+                <th>Details</th>
+                <td><input type="text" class="form-control"  value="{{ data['raw'][0]['description'] }}" required name="det" id=""></td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td><input type="number" class="form-control"  value="{{ data['raw'][0]['rate'] }}" required name="rate" id=""></td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td><input type="number" class="form-control" value="{{ data['raw'][0]['quantity'] }}" required name="quantity" id=""></td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="/{{ data['raw'][0]['image'] }}" height="70" width="70"  alt=""></td>
+            </tr>
+            <tr>
+                <th></th>
+                <th><input type="file" class="form-control" name="image" id=""></th>
+            </tr>
+    
+            <tr>
+               
+                <td colspan="2" align="center"><input type="submit" class="btn btn-success" name="update" id=""></td>
+            </tr>
+            </table>
+            </form>
+    
+
+    {% else %}
+    
+    <h1 class="hd">Manage Food</h1>
+    <form action="" id="form" method="post" class="form" enctype="multipart/form-data">
+        <table class="table form-group">
+            <tr>
+                <th>Food</th>
+                <td><input type="text" class="form-control" required name="food" id=""></td>
+            </tr>
+            <tr>
+                <th>Details</th>
+                <td><input type="text" class="form-control" required name="det" id=""></td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td><input type="number" class="form-control" required name="rate" id=""></td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td><input type="number" class="form-control" required name="quantity" id=""></td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><input type="file" class="form-control" required name="image" id=""></td>
+            </tr>
+           
+            <tr>
+               
+                <td colspan="2" align="center"><input type="submit" class="btn btn-success" name="btn" id=""></td>
+            </tr>
+            </table>
+            </form>
+
+    {% endif %}
+</div>
+    <br><br>
+    {% if data['count'] >= 1 %}
+    <h5>View Available Rooms</h5>
+    <table class="table table-striped tbl-new" style="width: 1000px;">
+        <tr>
+            <th>index</th>
+            <th>Food</th>
+            <th>Details</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Image</th>
+            <th></th>
+            <th></th>
+            
+        </tr>
+        {% for row in data['res'] %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row['food'] }}</td>
+            <td>{{ row['description'] }}</td>
+            <td>{{ row['rate'] }}</td>
+            <td>{{ row['quantity'] }}</td>
+            <td><img src="/{{ row['image'] }}" height="100" width="100" alt=""></td>
+           
+            <td><a class="btn btn-info" href="?action=update&fid={{ row['food_id'] }}">Update</a></td>
+            <td><a class="btn btn-danger" onclick="return confirm('Are You Sure!')" href="?action=delete&fid={{ row['food_id'] }}">Delete</a></td>
+                   </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</center>
+
+<script src="
+https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+<script>
+    $(function() {
+        $("input[name='food']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        $("input[name='lname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        // $("input[name='dob']").on('input', function(e) {
+        //     $(this).val($(this).val().replace(/[^0-9/]/g, ''));
+
+        // });
+        
+        $("input[name='phone']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='pin']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='email']").on('input', function(e) {
+              var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                if(!re) {
+                    $('#eerror').show();
+                } else {
+                    $('#eerror').hide();
+                }
+
+        });
+        $("input[name='address']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+
+        });
+        $("input[name='place']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+            
+        $("input[name='pwd']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9A-Za-z@/. ]/g, ''));
+            
+        });
+    });
+
+
+</script>
+
+{% include 'footer.html' %}

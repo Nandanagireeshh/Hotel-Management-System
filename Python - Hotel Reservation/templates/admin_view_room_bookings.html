@@ -1,0 +1,56 @@
+{% if session['utype'] == "admin" %}
+{% include 'adminheader.html' %}
+{% elif session['utype'] == "staff" %}
+{% include 'staffheader.html' %}
+{% endif %}
+<center>
+    <div class="img-div"></div>
+    <h3>Room Bokkings</h3>
+    <form action="" method="post">
+    <table class="table table-striped tbl-new bg-light shadow" style="max-width: 1200px;">
+        <tr>
+            <th>User</th>
+            <th>Place</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Room</th>
+            <th>Details</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+           
+
+        </tr>
+        {% for row in data['res'] %}
+        <tr>
+            <td>{{ row['fname'] }}{{ row['lname'] }}</td>
+            <td>{{ row['place'] }}</td>
+            <td>{{ row['phone'] }}</td>
+            <td>{{ row['email'] }}</td>
+            <td>{{ row['room'] }}</td>
+            <td>{{ row['description'] }}</td>
+            <td>{{ row['date'] }}</td>
+            <td>{{ row['status'] }}</td>
+            {% if row['status'] == 'pending' %}
+
+            <td><a onclick="return confirm('Are you Sure?')" href="?action=accept&bid={{ row['booking_id'] }}" class="btn btn-success">Accept</a></td>
+            <td><a onclick="return confirm('Are you Sure?')" href="?action=reject&bid={{ row['booking_id'] }}" class="btn btn-danger">Reject</a></td>
+            {% else %}
+
+
+            <td><a href="room_payment?bid={{ row['booking_id'] }}" class="btn btn-warning">View Payment</a></td>
+            <td><a onclick="return confirm('Are you Sure?')" href="?action=cancel&bid={{ row['booking_id'] }}" class="btn btn-danger">Cancel Booking</a></td>
+            {% endif %}
+
+      
+
+      
+
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+</center>
+
+{% include 'footer.html' %}

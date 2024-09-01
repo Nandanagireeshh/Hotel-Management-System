@@ -1,0 +1,36 @@
+{% include 'userheader.html' %}
+
+
+
+<center>
+    <div class="img-div"></div>
+    <h3 class="m-2">Available Rooms</h3>
+    <form action="" method="post">
+    <table class="table table-striped tbl-new bg-light shadow" style="max-width: 1200px;">
+        <tr>
+        
+            <th>Room</th>
+            <th>details</th>
+            <th>Amount</th>
+            <th></th>
+
+           
+
+        </tr>
+        {% for row in data['res'] %}
+        <tr>
+           
+            <td>{{ row['room'] }}</td>
+            <td>{{ row['description'] }}</td>
+            <td>Rs. {{ row['rate'] }}/-</td>
+            <td><a onclick="return confirm('Are you Sure Book this Room')" href="confirm_booking?rid={{ row['room_id'] }}&rate={{ row['rate'] }}" class="btn btn-dark">Book Room</a></td>
+
+
+
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+</center>
+
+{% include 'footer.html' %}

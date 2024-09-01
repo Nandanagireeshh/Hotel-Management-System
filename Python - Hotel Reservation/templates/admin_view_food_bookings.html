@@ -1,0 +1,47 @@
+{% if session['utype'] == "admin" %}
+{% include 'adminheader.html' %}
+{% elif session['utype'] == "staff" %}
+{% include 'staffheader.html' %}
+{% endif %}
+
+<center>
+    <div class="img-div"></div>
+    <h3>Food Bokkings</h3>
+    <form action="" method="post">
+    <table class="table table-striped tbl-new bg-light shadow" style="max-width: 1200px;">
+        <tr>
+            <th>User</th>
+            <th>Place</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Food</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Details</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+           
+
+        </tr>
+        {% for row in data['res'] %}
+        <tr>
+            <td>{{ row['fname'] }}{{ row['lname'] }}</td>
+            <td>{{ row['place'] }}</td>
+            <td>{{ row['phone'] }}</td>
+            <td>{{ row['email'] }}</td>
+            <td>{{ row['food'] }}</td>
+            <td>{{ row['quantity'] }}</td>
+            <td>{{ row['totalamount'] }}</td>
+            <td>{{ row['description'] }}</td>
+            <td>{{ row['order_date'] }}</td>
+            <td>{{ row['order_status'] }}</td>
+            <td><a href="food_payment?bid={{ row['ordermaster_id'] }}" class="btn btn-primary">View Payment</a></td>
+      
+
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+</center>
+
+{% include 'footer.html' %}

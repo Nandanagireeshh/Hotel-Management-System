@@ -1,0 +1,102 @@
+{% include 'publicheader.html' %}
+
+
+
+<center>
+    <div class="img-div"  style="height: 100vh;display: flex;justify-content: center;align-items:center ;">
+        <form action="" method="post" style="background-color: rgba(255, 255, 255, .4);width: 600px;border-radius: 4px;padding: 20px;">
+            <h1 style="color: white;">User registration</h1>
+            <table class="table" style="color: white;">
+                <tr>
+                    <th>First Name</th>
+                    <td><input type="text" required class="form-control" name="fname" id=""></td>
+                </tr>
+                <tr>
+                    <th>Last Name</th>
+                    <td><input type="text" required class="form-control" name="lname" id=""></td>
+                </tr>
+                <tr>
+                    <th>Place</th>
+                    <td><input type="text" required class="form-control" name="place" id=""></td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td><input type="text" maxlength="10" required class="form-control" name="phone" id=""></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td><input type="text" required class="form-control" name="email" id=""></td>
+                </tr>
+                <tr>
+                    <th>Username</th>
+                    <td><input type="text" required class="form-control" name="uname" id=""></td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td><input type="password" required class="form-control" name="pwd" id=""></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" class="btn btn-success"  name="btn" id="btn"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</center>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(function() {
+        $("input[name='fname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        $("input[name='lname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        // $("input[name='dob']").on('input', function(e) {
+        //     $(this).val($(this).val().replace(/[^0-9/]/g, ''));
+
+        // });
+        
+        $("input[name='phone']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='pin']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='email']").on('input', function(e) {
+              var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                if(!re) {
+                    $('#eerror').show();
+                    $('#btn').prop('disabled', true);
+                    console.log("err");
+                } else {
+                    $('#btn').prop('disabled', false);
+                    $('#eerror').hide();
+                    console.log("err");
+                }
+
+        });
+        $("input[name='address']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+
+        });
+        $("input[name='place']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+            
+        $("input[name='pwd']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9A-Za-z@/. ]/g, ''));
+            
+        });
+    });
+
+
+</script>
+
+{% include 'footer.html' %}

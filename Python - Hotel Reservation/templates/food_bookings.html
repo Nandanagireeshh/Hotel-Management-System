@@ -1,0 +1,38 @@
+{% include 'userheader.html' %}
+
+
+
+<center>
+    <div class="img-div"></div>
+    <h3>My Food Bokkings</h3>
+    <form action="" method="post">
+    <table class="table table-striped tbl-new bg-light shadow" style="max-width: 1200px;">
+        <tr>
+            <th></th>
+            <th>Food</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Details</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+           
+
+        </tr>
+        {% for row in data['res'] %}
+        <tr>
+            <td><img src="/{{ row['image'] }}" style="width: 50px;height: 50px;border-radius: 10px;" alt=""></td>
+            <td>{{ row['food'] }}</td>
+            <td>{{ row['quantity'] }}</td>
+            <td>{{ row['totalamount'] }}</td>
+            <td>{{ row['description'] }}</td>
+            <td>{{ row['order_date'] }}</td>
+            <td>{{ row['order_status'] }}</td>
+
+
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+</center>
+
+{% include 'footer.html' %}

@@ -1,0 +1,28 @@
+{% include 'userheader.html' %}
+
+
+
+<center>
+    <div class="img-div"  style="height: 100vh;display: flex;justify-content: center;align-items:center ;">
+        <form action="" method="post" style="background-color: rgba(255, 255, 255, .4);width: 600px;border-radius: 4px;padding: 20px;">
+            <h1 style="color: white;">Confirm your Booking</h1>
+            <table class="table" style="color: white;">
+                <tr>
+                    <th>Booking For</th>
+                    <td><input type="date" required class="form-control" min="{{ today }}" name="date" id=""></td>
+                </tr>
+                <tr>
+                    <th>No of Days</th>
+                    <td><input type="number" required class="form-control" name="days" id=""></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" class="btn btn-success"  name="btn" id="btn"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</center>
+
+
+
+{% include 'footer.html' %}

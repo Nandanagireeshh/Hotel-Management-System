@@ -1,0 +1,41 @@
+{% include 'userheader.html' %}
+
+
+
+<center>
+    <div class="img-div"></div>
+    <h3>My Room Bokkings</h3>
+    <form action="" method="post">
+    <table class="table table-striped tbl-new bg-light shadow" style="max-width: 1200px;">
+        <tr>
+            <th>Room</th>
+            <th>Details</th>
+            <th>Amount</th>
+  
+            <th>Booking Date</th>
+            <th>Status</th>
+            <th></th>
+           
+
+        </tr>
+        {% for row in data['res'] %}
+        <tr>
+            <td>{{ row['room'] }}</td>
+            <td>{{ row['description'] }}</td>
+            <td>{{ row['amount'] }}</td>
+            <td>{{ row['date'] }}</td>
+            {% if row['status'] == 'Request Accepted' %}
+            <td><a href="user_room_payment?omid={{ row['booking_id'] }}&amount={{ row['amount'] }}" class="btn btn-dark">Make Payment</a></td>
+            {% else %}
+            <td>{{ row['status'] }}</td>
+            {% endif %}
+            <td><a onclick="return confirm('Are you Sure?')" href="?action=cancel&bid={{ row['booking_id'] }}" class="btn btn-danger">Cancel Booking</a></td>
+
+
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+</center>
+
+{% include 'footer.html' %}

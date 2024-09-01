@@ -1,0 +1,38 @@
+{% include 'publicheader.html' %}
+
+
+<center>
+    <div class="img-div" style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+        <form action="" method="post" style="background-color: rgba(255, 255, 255, .4); width: 600px; border-radius: 4px; padding: 20px;">
+            <h1 style="color: white;">Login</h1>
+            <table class="table" style="color: white;">
+                <tr>
+                    <th>Username</th>
+                    <td><input type="text" required class="form-control" name="uname" id=""></td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td><input type="password" required class="form-control" name="pasw" id=""></td>
+                </tr>
+                <tr>
+                    <th>Role</th>
+                    <td>
+                        <select name="role" required class="form-control">
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                            <option value="staff">Staff</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" class="btn btn-success" name="btn" id="btn">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div style="color: white; margin-top: 10px;">
+            <p>If you don't have an account, <a href="{{ url_for('public.userreg') }}" style="color: #FFD700;">register here</a>.</p>
+        </div>
+    </div>
+</center>
