@@ -1,0 +1,124 @@
+{% include 'userheader.html' %}
+<div class="img-div"></div>
+<center>
+    <h1 style="margin-top: 10px;">Add to Cart</h1>
+    <form action="" method="post" class="form" id="form">
+        <table class="table form-group" style="color: black !important;">
+            <tr>
+                <th>Food Item</th>
+                <td><input disabled type="text" class="form-control" value="{{ item }}" name="item" id=""></td>
+            </tr>
+            <tr>
+                <th>Rate</th>
+                <td><input type="text" class="form-control" disabled required value="{{ cp }}" name="cp" id="CP"></td>
+            </tr>
+            <tr>
+                <th>Required Stock</th>
+                <td><input oninput="calTotal()" type="number" class="form-control" required name="rstock" id="stock"></td>
+            </tr>
+            <tr>
+                <th>Total Amount</th>
+                <td><input type="text"  readonly class="form-control" required name="total" id="totalVal"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" class="btn btn-primary"  name="btn" id="btn"></td>
+            </tr>
+        </table>
+    </form>
+</center>
+<input type="hidden" value="{{ stock }}" name="" id="fullstock">
+
+<script>
+    var cost = document.getElementById("CP")
+   
+    var total = document.getElementById("totalVal")
+    // console.log(total);
+    var n=cost.value.length.toString()
+    // console.log(n);
+    var unit = cost.value.slice(n-2,n)
+    
+    
+    function calTotal(){
+        var rStock = document.getElementById("stock").value
+        var fullstock = document.getElementById("fullstock").value
+
+        if (parseInt(fullstock) <= parseInt(rStock)){
+            location.reload()
+            alert("Insufficent Stock")
+        }else{
+
+            
+            total.value=parseInt(cost.value)*parseInt(rStock)
+            
+        
+    }
+
+       
+
+    }
+</script>
+
+
+<style>
+    tr,td,th{
+        border: none !important;
+    }
+</style>
+
+
+<script src="
+https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+<script>
+    $(function() {
+        $("input[name='fname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        $("input[name='lname']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+        // $("input[name='dob']").on('input', function(e) {
+        //     $(this).val($(this).val().replace(/[^0-9/]/g, ''));
+
+        // });
+        
+        $("input[name='phone']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='pin']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9]/g, ''));
+            
+        });
+        $("input[name='email']").on('input', function(e) {
+              var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{1,}/.test(this.value);
+                if(!re) {
+                    $('#eerror').show();
+                    $('#btn').prop('disabled', true);
+                } else {
+                    $('#eerror').hide();
+                }
+
+        });
+        $("input[name='address']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z0-9()/. ]/g, ''));
+
+        });
+        $("input[name='place']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^A-Za-z ]/g, ''));
+
+        });
+            
+        $("input[name='pwd']").on('input', function(e) {
+        	$(this).val($(this).val().replace(/[^0-9A-Za-z@/. ]/g, ''));
+            
+        });
+    });
+
+
+</script>
+
+
+{% include 'footer.html' %}
