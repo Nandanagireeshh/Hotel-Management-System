@@ -11,6 +11,9 @@
             color: #333;
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center elements horizontally */
         }
 
         h1 {
@@ -18,13 +21,14 @@
             color: #4A90E2;
         }
 
-        form {
+        .form-container {
             max-width: 500px;
-            margin: 0 auto;
+            width: 100%; /* Full width */
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            margin-bottom: 20px; /* Space between form and buttons */
         }
 
         label {
@@ -33,6 +37,7 @@
             font-weight: bold;
         }
 
+        select,
         input[type="text"],
         textarea {
             width: 100%;
@@ -43,20 +48,30 @@
             font-size: 16px;
         }
 
-        input[type="submit"] {
+        .icon-button {
             background-color: #4CAF50; /* Green */
             color: white;
-            padding: 10px 15px;
             border: none;
-            border-radius: 5px;
+            border-radius: 50%; /* Circular */
             cursor: pointer;
-            font-size: 16px;
+            font-size: 20px;
+            width: 60px; /* Width of the circular button */
+            height: 60px; /* Height of the circular button */
+            display: flex;
+            align-items: center; /* Center icon vertically */
+            justify-content: center; /* Center icon horizontally */
             transition: background-color 0.3s;
-            width: 100%;
+            margin: 0 10px; /* Space between buttons */
+            text-align: center; /* Center icon text */
+            outline: none; /* Remove default outline */
         }
 
-        input[type="submit"]:hover {
-            background-color: #45a049;
+        .icon-button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        .clicked {
+            background-color: #008000; /* Dark green when clicked */
         }
 
         .alert {
@@ -68,20 +83,53 @@
             border-radius: 5px;
             text-align: center;
         }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center; /* Center buttons */
+            width: 100%; /* Full width */
+            margin-top: 20px; /* Space above buttons */
+        }
     </style>
+    <script>
+        function changeColor(button) {
+            button.classList.toggle('clicked'); // Toggle the clicked class
+        }
+    </script>
 </head>
 <body>
     <h1>Housekeeping Request</h1>
 
-    <form action="{{ url_for('user.housekeeping_request') }}" method="POST">
-        <label for="serviceType">Service Type:</label>
-        <input type="text" id="serviceType" name="serviceType" required>
+    <div class="form-container">
+        <form action="{{ url_for('user.housekeeping_request') }}" method="POST">
+            <label for="serviceType">Service Type:</label>
+            <select id="serviceType" name="serviceType" required>
+                <option value="" disabled selected>Select a service</option>
+                <option value="Room Cleaning">Room Cleaning</option>
+                <option value="Laundry Service">Laundry Service</option>
+                <option value="Mini-Bar Replenishment">Mini-Bar Replenishment</option>
+                <option value="Towel Replacement">Towel Replacement</option>
+                <option value="Bathroom Cleaning">Bathroom Cleaning</option>
+                <option value="Trash Removal">Trash Removal</option>
+                <option value="Sanitization Services">Sanitization Services</option>
+                <option value="Special Services">Special Services</option>
+            </select>
 
-        <label for="request_details">Details:</label>
-        <textarea id="request_details" name="request_details" required></textarea>
+            <label for="request_details">Details:</label>
+            <textarea id="request_details" name="request_details" required></textarea>
 
-        <input type="submit" value="Submit Request">
-    </form>
+            <input type="submit" value="Submit Request">
+        </form>
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ url_for('user.userhome') }}">
+            <button class="icon-button" onclick="changeColor(this)">🏠</button> <!-- Home icon -->
+        </a>
+        <a href="{{ url_for('user.view_housekeeping_requests') }}">
+            <button class="icon-button" onclick="changeColor(this)">📋</button> <!-- Clipboard icon -->
+        </a>
+    </div>
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
