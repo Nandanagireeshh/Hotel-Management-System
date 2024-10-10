@@ -1,0 +1,26 @@
+{% if session['utype'] == "admin" %}
+{% include 'adminheader.html' %}
+{% elif session['utype'] == "staff" %}
+{% include 'staffheader.html' %}
+{% endif %}
+
+<center>
+    <div class="img-div"></div>
+
+    <h3>Payment Details</h3>
+
+    <table class="table table-striped tbl-new bg-light shadow" style="max-width: 600px;">
+       
+        {% for row in data['res'] %}
+        <tr>
+           
+            <td>Rs.{{ row['amount'] }} was paid on {{ row['date'] }}</td>
+            <td><a href="?action=accept&bid={{ bid }}" class="btn btn-primary">Accept Payment</a></td>
+
+
+        </tr>
+        {% endfor %}
+    </table>
+</center>
+
+{% include 'footer.html' %}
