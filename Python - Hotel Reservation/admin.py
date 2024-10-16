@@ -120,7 +120,7 @@ def manage_food():
 
 
 
-""""
+
 
 @admin.route('/admin_manage_staff',methods=['get','post'])
 def admin_manage_staff():
@@ -188,7 +188,6 @@ def admin_manage_staff():
         return redirect(url_for("admin.admin_manage_staff"))
     return render_template('admin_manage_staff.html',data=data)
 
-"""
 
 @admin.route('/admin_view_room_bookings')
 def admin_view_room_bookings():
@@ -229,7 +228,6 @@ def admin_view_food_bookings():
     data['res']=select(q)
     return render_template('admin_view_food_bookings.html',data=data)
 
-'''
 
 @admin.route("/adminviewcomplaints",methods=['get','post'])
 def adminviewcomplaints():
@@ -253,7 +251,6 @@ def adminviewcomplaints():
             update(q)
             return redirect(url_for("admin.adminviewcomplaints"))
     return render_template("adminviewcomplaints.html",data=data)
-
 
 
 @admin.route('/food_payment')
@@ -291,4 +288,13 @@ def room_payment():
         return redirect(url_for("admin.room_payment",bid=bid))
     return render_template('room_payment.html',data=data,bid=bid)
 
-'''
+@admin.route('/view_feedback')
+def view_feedback():
+    data = {}
+    q = """
+        SELECT feedback.feedback_text, feedback.created_at, user.fname, user.lname 
+        FROM feedback 
+        JOIN user ON feedback.user_id = user.user_id
+    """
+    data['feedbacks'] = select(q)  # Ensure `select` is a function that executes your query and returns the results
+    return render_template('view_feedback.html', data=data)
