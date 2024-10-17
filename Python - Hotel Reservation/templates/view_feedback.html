@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Feedback</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #35424a;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: black;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #35424a;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #e1e1e1;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+        strong {
+            color: #e8491d;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #35424a;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Feedback from Guests</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('admin.adminhome') }}">Go Back</a></li>
+
+                <!-- Add other navigation links here -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Feedback List</h2>
+        {% if data.feedbacks %}
+            <ul>
+                {% for feedback in data.feedbacks %}
+                    <li>
+                        <strong>{{ feedback.fname }} {{ feedback.lname }}</strong>:
+                        <em>{{ feedback.feedback_text }}</em>
+                        <br>
+                        <small>Submitted on: {{ feedback.created_at }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No feedback available.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; {{ current_year }} My Hotel. All rights reserved.</p>
+    </footer>
+</body>
+</html>
