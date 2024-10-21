@@ -217,19 +217,41 @@ def confirm_booking():
 
     return render_template("confirm_booking.html", data=data, today=today)
 '''
+from datetime import datetime
+from datetime import datetime
+
 @user.route('/confirm_booking', methods=['GET', 'POST'])
 def confirm_booking():
     data = {}
-    from datetime import date
-
-    today = date.today()
     rid = request.args['rid']  # Room ID
-    rate = request.args['rate']  # Room rate
+    rate = float(request.args['rate'])  # Room rate (convert to float)
 
     if 'btn' in request.form:
-        booking_date = request.form['date']  # Booking date
-        days = request.form['days']  # Number of days for the booking
-        num_persons = request.form['num_persons']  # Number of persons for the booking
+        booking_date = request.form['date']  # Booking start date (in string format)
+        days = request.form['days']  # Booking end date (should be in string format)
+        num_persons = int(request.form['num_persons'])  # Number of persons for the booking
+
+        # Convert booking_date and days to date objects
+        booking_date_obj = datetime.strptime(booking_date, '%Y-%m-%d').date()
+        end_date_obj = datetime.strptime(days, '%Y-%m-%d').date()  # Assuming 'days' is actually the end date
+
+        # Get the current date
+        current_date = datetime.now().date()
+
+        # Check if the booking date is before the current date
+        if booking_date_obj < current_date:
+            flash("You cannot book a room for a date in the past.")
+            return redirect(url_for("user.userhome"))
+
+        # Calculate the difference in days
+        days_difference = (end_date_obj - booking_date_obj).days
+
+        if days_difference < 0:
+            flash("The end date cannot be before the booking date.")
+            return redirect(url_for("user.userhome"))
+
+        # Calculate the total amount (rate * days_difference)
+        total_amount = rate * days_difference
 
         # Check if the room is already booked for the given date
         q = "SELECT * FROM booking WHERE room_id = '%s' AND date = '%s'" % (rid, booking_date)
@@ -242,7 +264,7 @@ def confirm_booking():
             q = """
                 INSERT INTO booking (user_id, room_id, amount, date, booking_for, no_of_days, num_persons, status) 
                 VALUES ('%s', '%s', '%s', CURDATE(), '%s', '%s', '%s', 'pending')
-                """ % (session['uid'], rid, rate, booking_date, days, num_persons)
+                """ % (session['uid'], rid, total_amount, booking_date, days_difference, num_persons)
             insert(q)
 
             # Update the room status to 'booked'
@@ -252,7 +274,7 @@ def confirm_booking():
             flash("Room Booked Successfully")
             return redirect(url_for("user.userhome"))
 
-    return render_template("confirm_booking.html", data=data, today=today)
+    return render_template("confirm_booking.html", data=data)
 
 
 @user.route("/customer_send_complaint", methods=['GET', 'POST'])
@@ -275,22 +297,30 @@ def customer_send_complaint():
 
 @user.route('/housekeeping_request', methods=['GET', 'POST'])
 def housekeeping_request():
+    data = {}
 
 
     if request.method == 'POST':
         service_type = request.form['serviceType']
+        room_id = request.form['room']
         request_details = request.form['request_details']  # Fixed the space issue
 
 
+
         # Save the request to your database
-        q = "INSERT INTO housekeeping_requests (user_id, service_type, request_details, status) VALUES ('%s','%s', '%s', 'pending')" % (
-        session['uid'],  service_type, request_details)
+        q = "INSERT INTO housekeeping_requests (user_id, room_id, service_type, request_details, status) VALUES ('%s','%s','%s', '%s', 'pending')" % (
+        session['uid'], room_id, service_type, request_details)
         insert(q)
 
         flash("Your housekeeping request has been submitted successfully!", "success")
         return redirect(url_for('user.housekeeping_request'))
 
-    return render_template('housekeeping_request.html')
+    qry = "SELECT * FROM booking WHERE user_id=%s;" % (session['uid'])
+    data['res']  = select(qry)
+
+
+
+    return render_template('housekeeping_request.html', data=data)
 
 
 
