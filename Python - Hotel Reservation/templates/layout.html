@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hotel Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            display: flex; /* Enable flexbox for the body */
+            flex-direction: column; /* Arrange children in a column */
+            min-height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+            font-family: Arial, sans-serif; /* Optional: Set a default font */
+            background-image: url('https://example.com/your-background-image.jpg'); /* Replace with your image URL */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat; /* Prevent repeating of the background image */
+        }
+
+        header {
+            background-color: rgba(0, 123, 255, 0.8); /* Semi-transparent header */
+            color: white; /* Header text color */
+            padding: 10px 20px; /* Padding for the header */
+        }
+
+        nav ul {
+            list-style-type: none; /* Remove bullet points */
+            padding: 0; /* Remove padding */
+        }
+
+        nav ul li {
+            display: inline; /* Display list items inline */
+            margin-right: 15px; /* Space between menu items */
+        }
+
+        nav ul li a {
+            color: white; /* Link color */
+            text-decoration: none; /* Remove underline from links */
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        footer {
+            text-align: center; /* Center the text in the footer */
+            padding: 20px; /* Add padding for aesthetics */
+            background-color: rgba(248, 249, 250, 0.8); /* Semi-transparent footer background */
+            width: 100%; /* Ensure it takes the full width */
+            position: relative; /* Positioning */
+            bottom: 0; /* Stick it to the bottom */
+        }
+
+        main {
+            flex: 1; /* Allow the main content to grow */
+            padding: 20px; /* Padding for the main content */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background for main content */
+            border-radius: 8px; /* Rounded corners for the main content area */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('user.userhome') }}">Go Back</a></li>
+
+                <!-- Add other navigation links here -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Content from other templates will be injected here -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; {{ current_year }} My Hotel. All rights reserved.</p>
+    </footer>
+</body>
+</html>
