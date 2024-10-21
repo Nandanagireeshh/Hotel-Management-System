@@ -59,15 +59,7 @@ def insert(q):
 	cur.close()
 	cnx.close()
 	return result
-def insert(q):
-	cnx=mysql.connector.connect(user="root",password=password,host="localhost", database=database)
-	cur=cnx.cursor(dictionary=True)
-	cur.execute(q)
-	cnx.commit()
-	result=cur.lastrowid
-	cur.close()
-	cnx.close()
-	return result
+
 
 
 def inserted(q, params):
